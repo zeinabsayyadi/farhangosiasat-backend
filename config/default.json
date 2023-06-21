@@ -1,0 +1,4 @@
+{
+  "databaseAddress": "0.0.0.0/farhangosiasat",
+  "jwtPrivateKey":"NodeCoursePrivateKey"
+}
