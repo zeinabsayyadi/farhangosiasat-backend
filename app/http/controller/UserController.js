@@ -25,10 +25,10 @@ module.exports = new (class UserController {
     if (!user)
       return res
         .status(400)
-        .send({ message: "کاربری با این شماره موبایل یا پسورد یافت نشد" });
+        .send({ message: "کاربری با این شماره موبایل  یافت نشد" });
 
-    const result = await bcrypt.compare(req.body.password, user.password);
-    if (!result)
+    //const result = await bcrypt.compare(req.body.password, user.password);
+    if (user.password !== req.body.password)
       return res
         .status(400)
         .send({ message: "کاربری با این شماره موبایل یا پسورد یافت نشد" });

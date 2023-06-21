@@ -35,7 +35,6 @@ class Application {
     // app.use(CustomerRoutes);
     // app.use(HomeRoutes);
     app.use(UserRoutes);
-
     //must be at last
     //app.use(ErrorMiddleware);
   }

@@ -7,16 +7,16 @@ const passwordPatern =
 
 const adminLoginValidator = (data) => {
   const schema = Joi.object({
-    phone: Joi.number().min(11).max(11).required(),
+    phone: Joi.number().required(),
     password: Joi.string().required(),
-    verifyCode: Joi.number().integer().required(),
+    //verifyCode: Joi.number().integer().required(),
   });
   return schema.validate(data);
 };
 const loginValidator = (data) => {
   const schema = Joi.object({
     phone: Joi.number().required(),
-    verifyCode: Joi.string().required(),
+    //verifyCode: Joi.string().required(),
   });
   return schema.validate(data);
 };
