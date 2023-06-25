@@ -7,15 +7,27 @@ const passwordPatern =
 
 const adminLoginValidator = (data) => {
   const schema = Joi.object({
-    phone: Joi.number().required(),
-    password: Joi.string().required(),
+    phone: Joi.string()
+      .pattern(
+        new RegExp("^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$")
+      )
+      .required(),
+    password: Joi.string()
+      .pattern(
+        new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$")
+      )
+      .required(),
     //verifyCode: Joi.number().integer().required(),
   });
   return schema.validate(data);
 };
 const loginValidator = (data) => {
   const schema = Joi.object({
-    phone: Joi.number().required(),
+    phone: Joi.string()
+      .pattern(
+        new RegExp("^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$")
+      )
+      .required(),
     //verifyCode: Joi.string().required(),
   });
   return schema.validate(data);
@@ -24,7 +36,11 @@ const registorValidator = (data) => {
   const schema = Joi.object({
     firstname: Joi.string().min(3).max(30).required(),
     lastname: Joi.string().min(3).max(30).required(),
-    phone: Joi.number().required(),
+    // phone: Joi.string()
+    //   .pattern(
+    //     new RegExp("^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$")
+    //   )
+    //   .required(),
     email: Joi.string().email().required(),
     isStudent: Joi.boolean().default(false),
   });
