@@ -1,9 +1,6 @@
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-const phonePatern = "/09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/";
-const passwordPatern =
-  "/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/";
 
 const adminLoginValidator = (data) => {
   const schema = Joi.object({
