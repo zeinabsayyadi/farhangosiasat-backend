@@ -1,7 +1,6 @@
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-
 const adminLoginValidator = (data) => {
   const schema = Joi.object({
     phone: Joi.string()
@@ -31,8 +30,8 @@ const loginValidator = (data) => {
 };
 const registorValidator = (data) => {
   const schema = Joi.object({
-    firstname: Joi.string().min(3).max(30).required(),
-    lastname: Joi.string().min(3).max(30).required(),
+    name: Joi.string().min(3).max(30).required(),
+    surname: Joi.string().min(3).max(30).required(),
     // phone: Joi.string()
     //   .pattern(
     //     new RegExp("^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$")

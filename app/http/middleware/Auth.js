@@ -9,6 +9,6 @@ module.exports = function (req, res, next) {
     console.log(req.user);
     next();
   } catch (err) {
-    res.status(401).send("شما اجازه دسترسی به این قسمت را ندارید", err);
+    res.status(401).send("کچ شما اجازه دسترسی به این قسمت را ندارید", err);
   }
 };

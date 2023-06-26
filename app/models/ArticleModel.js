@@ -13,6 +13,6 @@ const schema = new mongoose.Schema({
   contentlink: { type: String, required: true },
 });
 
-const ArticleModle = mongoose.model("User", schema);
+const ArticleModle = mongoose.model("Article", schema);
 
 module.exports = ArticleModle;

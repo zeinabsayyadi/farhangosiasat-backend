@@ -32,7 +32,7 @@ class Application {
     // my middleware
 
     //routes
-    // app.use(CustomerRoutes);
+
     // app.use(HomeRoutes);
     app.use(UserRoutes);
     app.use(ArticleRouter);

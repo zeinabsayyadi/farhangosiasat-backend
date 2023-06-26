@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 const schema = new mongoose.Schema({
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
+  name: { type: String, required: true },
+  surname: { type: String, required: true },
   phone: { type: String, unique: true },
   email: { type: String },
   role: { type: String, required: true, default: "user" },
@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
 schema.methods.generateAuthToken = function () {
   const data = {
     _id: this._id,
-    firstname: this.firstname,
+    name: this.name,
     role: this.role,
   };
 

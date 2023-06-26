@@ -27,11 +27,13 @@ module.exports = new (class UserController {
         .status(400)
         .send({ message: "کاربری با این شماره موبایل  یافت نشد" });
 
-    //const result = await bcrypt.compare(req.body.password, user.password);
-    if (user.password !== req.body.password)
+    //const salt = await bcrypt.genSalt(10);
+    //const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const result = await bcrypt.compare(req.body.password, user.password);
+    if (!result)
       return res
         .status(400)
-        .send({ message: "کاربری با این شماره موبایل یا پسورد یافت نشد" });
+        .send({ message: `${user.password},:, ${req.body.password}` });
 
     const token = user.generateAuthToken();
     res.header("x-access-token", token).status(200).send({ success: true });
@@ -62,14 +64,14 @@ module.exports = new (class UserController {
         .send({ message: "این کاربر قبلا ثبت نام کرده است" });
 
     user = new UserModel(
-      _.pick(req.body, ["firstname", "lastname", "phone", "email", "isStudent"])
+      _.pick(req.body, ["name", "surname", "phone", "email", "isStudent"])
     );
     user.role = "user";
     user = await user.save();
     const token = user.generateAuthToken();
     res
       .header("x-access-token", token)
-      .send(_.pick(user, ["firstname", "phone", "_id"]));
+      .send(_.pick(user, ["name", "phone", "_id"]));
   }
 
   async sendCode(req, res) {
