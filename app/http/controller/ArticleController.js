@@ -6,6 +6,7 @@ module.exports = new (class ArticleController {
   async createArticle(req, res) {
     const { error } = CreateArticleValidator(req.body);
     if (error) return res.status(400).send({ message: error.message });
+    console.log("request files", req.file);
     let article = await ArticleModle.find({
       title: req.body.title,
       authorName: req.body.authorName,
@@ -24,7 +25,6 @@ module.exports = new (class ArticleController {
       ])
     );
 
-    
     await newArticle.save();
     res
       .header("x-access-token", token)
