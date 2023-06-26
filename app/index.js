@@ -7,7 +7,7 @@ require("winston-mongodb");
 require("express-async-errors");
 
 const UserRoutes = require("./routes/UserRoutes");
-
+const ArticleRouter = require("./routes/ArticleRouter");
 const app = express();
 
 class Application {
@@ -35,6 +35,7 @@ class Application {
     // app.use(CustomerRoutes);
     // app.use(HomeRoutes);
     app.use(UserRoutes);
+    app.use(ArticleRouter);
     //must be at last
     //app.use(ErrorMiddleware);
   }
