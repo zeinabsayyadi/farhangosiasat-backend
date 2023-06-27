@@ -18,6 +18,7 @@ const {
 
 module.exports = new (class UserController {
   async adminLogin(req, res) {
+    console.log(req.body);
     const { error } = adminLoginValidator(req.body);
     if (error) return res.status(400).send({ message: error.message });
 
@@ -26,9 +27,6 @@ module.exports = new (class UserController {
       return res
         .status(400)
         .send({ message: "کاربری با این شماره موبایل  یافت نشد" });
-
-    //const salt = await bcrypt.genSalt(10);
-    //const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const result = await bcrypt.compare(req.body.password, user.password);
     if (!result)
       return res
@@ -36,7 +34,12 @@ module.exports = new (class UserController {
         .send({ message: `${user.password},:, ${req.body.password}` });
 
     const token = user.generateAuthToken();
-    res.header("x-access-token", token).status(200).send({ success: true });
+    res.status(200).send({
+      success: true,
+      data: {
+        "x-access-token": token,
+      },
+    });
   }
 
   async login(req, res) {

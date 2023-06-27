@@ -27,8 +27,12 @@ class Application {
     if (app.get("env") === "production") app.use(morgan("tiny"));
 
     // third-party middleware
-    app.use(cors());
-
+    const corsOpts = {
+      origin: "*",
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Content-Type"],
+    };
+    app.use(cors(corsOpts));
     // my middleware
 
     //routes
@@ -72,7 +76,7 @@ class Application {
       .catch((err) => console.log("db not connected : ", err));
   }
   setUpExpressServer() {
-    const port = process.env.myport || 3000;
+    const port = process.env.myport || 8000;
     app.listen(port, (err) => {
       if (err) console.log(err);
       else console.log(`app listen to port ${port}`);
