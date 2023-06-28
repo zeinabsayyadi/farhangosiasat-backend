@@ -16,6 +16,7 @@ schema.methods.generateAuthToken = function () {
   const data = {
     _id: this._id,
     name: this.name,
+    surname: this.surname,
     role: this.role,
   };
 

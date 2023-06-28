@@ -18,7 +18,6 @@ const {
 
 module.exports = new (class UserController {
   async adminLogin(req, res) {
-    console.log(req.body);
     const { error } = adminLoginValidator(req.body);
     if (error) return res.status(400).send({ message: error.message });
 
@@ -36,8 +35,28 @@ module.exports = new (class UserController {
     const token = user.generateAuthToken();
     res.status(200).send({
       success: true,
-      data: {
-        "x-access-token": token,
+      message: "ورود به پنل موفقیت آمیز بود",
+      payload: {
+        xAccessToken: token,
+        user: _.pick(user, ["name", "surname", "phone", "email", "role"]),
+      },
+    });
+  }
+
+  async adminLoginByToken(req, res) {
+    console.log(req);
+    let user = await UserModel.findById(req.user?._id);
+    if (!user) {
+      res
+        .status(401)
+        .send({ success: false, message: "کاربر یافت نشد", payload: {} });
+    }
+    res.status(200).send({
+      success: true,
+      message: "ورود به پنل موفقیت آمیز بود",
+      payload: {
+        xAccessToken: req.header("x_access_token"),
+        user: _.pick(user, ["name", "surname", "phone", "email", "role"]),
       },
     });
   }
