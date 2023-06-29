@@ -44,7 +44,7 @@ module.exports = new (class UserController {
   }
 
   async adminLoginByToken(req, res) {
-    console.log(req);
+    console.log(req.header);
     let user = await UserModel.findById(req.user?._id);
     if (!user) {
       res
@@ -55,7 +55,7 @@ module.exports = new (class UserController {
       success: true,
       message: "ورود به پنل موفقیت آمیز بود",
       payload: {
-        xAccessToken: req.header("x_access_token"),
+        xAccessToken: req?.header("x-access-token"),
         user: _.pick(user, ["name", "surname", "phone", "email", "role"]),
       },
     });

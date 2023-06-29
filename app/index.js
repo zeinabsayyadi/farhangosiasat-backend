@@ -21,7 +21,6 @@ class Application {
   setupRoutesAndMiddlewares() {
     // built-in middleware
     app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
     app.use(express.static("public"));
 
     if (app.get("env") === "production") app.use(morgan("tiny"));
@@ -29,10 +28,13 @@ class Application {
     // third-party middleware
     const corsOpts = {
       origin: "*",
-      methods: ["GET", "POST"],
-      allowedHeaders: ["Content-Type"],
+      methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH", "HEAD"],
+      allowedHeaders: ["Content-Type", "Authorization", "X-Access-Token"],
+      credentials: true,
     };
     app.use(cors(corsOpts));
+
+    app.use(express.urlencoded({ extended: true }));
     // my middleware
 
     //routes
