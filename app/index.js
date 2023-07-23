@@ -21,7 +21,7 @@ class Application {
   setupRoutesAndMiddlewares() {
     // built-in middleware
     app.use(express.json());
-    app.use(express.static("public"));
+    app.use("/static", express.static("uploadedFiles"));
 
     if (app.get("env") === "production") app.use(morgan("tiny"));
 
@@ -42,8 +42,6 @@ class Application {
     // app.use(HomeRoutes);
     app.use(UserRoutes);
     app.use(ArticleRouter);
-    //must be at last
-    //app.use(ErrorMiddleware);
   }
 
   setupConfigs() {

@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const path = require("path");
 const ArticleModle = require("../../models/ArticleModel");
 const { CreateArticleValidator } = require("../validators/ArticleValidator");
 module.exports = new (class ArticleController {
@@ -6,14 +7,23 @@ module.exports = new (class ArticleController {
   async createArticle(req, res) {
     const { error } = CreateArticleValidator(req.body);
     if (error) return res.status(400).send({ message: error.message });
-    console.log("request files", req.file);
     let article = await ArticleModle.find({
       title: req.body.title,
       authorName: req.body.authorName,
       authorSurname: req.body.authorSurname,
     });
-    if (article.length) return res.status(400).send({ message: `${article}` });
-    //save content in server
+    if (article.length)
+      return res
+        .status(400)
+        .send({ message: "مقاله ای با این نام از این نویسنده موجود است" });
+    // save content in server
+    const coverimagelink = [
+      req.files?.articleImageTop[0]?.path,
+      req.files?.articleImageMiddle[0]?.path,
+      req.files?.articleImageEnd[0]?.path,
+    ];
+
+    const contentlink = req.files?.articleContent[0]?.path;
     const newArticle = new ArticleModle(
       _.pick(req.body, [
         "title",
@@ -25,9 +35,21 @@ module.exports = new (class ArticleController {
       ])
     );
 
+    (newArticle.coverimagelink = coverimagelink),
+      (newArticle.contentlink = contentlink);
     await newArticle.save();
-    res
-      .header("x-access-token", token)
-      .send(_.pick(newArticle, ["title", "authourname", "_id"]));
+    res.send(_.pick(newArticle, ["title", "authourName", "_id"]));
+  }
+
+  async readPaginatedArticles(req, res) {
+    // const { startIndex, endIndex, limit } = req?.pagination;
+    const articles = await ArticleModle.find();
+    res.send({ articles, total: 10 });
+  }
+  async readOneArticleById(req, res) {
+    const id = req.params.id;
+    let article = await ArticleModle.findById(id);
+    console.log(article);
+    res.send(article);
   }
 })();

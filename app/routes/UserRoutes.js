@@ -5,10 +5,10 @@ const UserController = require("../http/controller/UserController");
 const Admin = require("../http/middleware/Admin");
 const Auth = require("../http/middleware/Auth");
 
-router.post("/api/retrict/login", UserController.adminLogin);
+router.post("/api/restrict/login", UserController.adminLogin);
 
 router.post(
-  "/api/retrict/loginbytoken",
+  "/api/restrict/loginbytoken",
   Auth,
   Admin,
   UserController.adminLoginByToken

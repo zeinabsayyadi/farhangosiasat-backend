@@ -2,36 +2,61 @@ const path = require("path");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    console.log("file here", file);
     if (file.fieldname === "articleContent") {
       cb(null, "uploadedFiles/article/contents/");
-    } else if (file.fieldname === "articleImage") {
+    } else if (
+      file.fieldname === "articleImageTop" ||
+      file.fieldname === "articleImageMiddle" ||
+      file.fieldname === "articleImageEnd"
+    ) {
+      console.log("file", file);
       cb(null, "uploadedFiles/article/image/");
+    } else {
+      console.log("file out of condition: ", file);
     }
+    //cb(null, "uploadedFiles/article/contents/");
   },
   filename: (req, file, cb) => {
+    console.log("file name", file);
     if (file.fieldname === "articleContent") {
       cb(null, file.fieldname + Date.now() + path.extname(file.originalname));
-    } else if (file.fieldname === "articleImage") {
+    } else if (
+      file.fieldname === "articleImageTop" ||
+      file.fieldname === "articleImageMiddle" ||
+      file.fieldname === "articleImageEnd"
+    ) {
       cb(null, file.fieldname + Date.now() + path.extname(file.originalname));
+    } else {
+      console.log("file out of condition: ", file);
     }
+    //cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 module.exports = multer({
   storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 10,
-  },
+  // limits: {
+  //   fileSize: 1024 * 1024 * 10,
+  // },
   // fileFilter: (req, file, cb) => {
   //   checkFileType(file, cb);
   // },
 }).fields([
   {
     name: "articleContent",
-    maxCount: 4,
+    maxCount: 1,
   },
   {
-    name: "articleImage",
-    maxCount: 3,
+    name: "articleImageTop",
+    maxCount: 1,
+  },
+  {
+    name: "articleImageMiddle",
+    maxCount: 1,
+  },
+  {
+    name: "articleImageEnd",
+    maxCount: 1,
   },
 ]);
 
