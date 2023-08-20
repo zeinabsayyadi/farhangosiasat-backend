@@ -29,11 +29,19 @@ class Application {
     const corsOpts = {
       origin: "*",
       methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH", "HEAD"],
-      allowedHeaders: ["Content-Type", "Authorization", "X-Access-Token"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Access-Token",
+        "Accept",
+        "Content-Disposition",
+        "Content-Transfer-Encoding",
+      ],
       credentials: true,
     };
     app.use(cors(corsOpts));
 
+    //app.use(cors());
     app.use(express.urlencoded({ extended: true }));
     // my middleware
 
