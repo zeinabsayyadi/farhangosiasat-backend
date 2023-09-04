@@ -29,7 +29,6 @@ router.get("/guest/artilces", ArticleController.readPaginatedArticles);
 router.get("/guest/article/:contentlink", ArticleController.readArticleContent);
 
 router.get("/api/pdf", (req, res) => {
-  console.log("meaooo: ", rootPath);
   const pdfFilePath = path.join(
     rootPath,
     "uploadedFiles/article/contents",

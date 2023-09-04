@@ -45,10 +45,6 @@ module.exports = new (class ArticleController {
   async readPaginatedArticles(req, res) {
     // const { startIndex, endIndex, limit } = req?.pagination;
     const articles = await ArticleModle.find();
-    articles.map((article) => {
-      const readData = fs.readFileSync(article.contentlink, "utf8");
-      console.log(readData);
-    });
     res.send({ articles });
   }
 
